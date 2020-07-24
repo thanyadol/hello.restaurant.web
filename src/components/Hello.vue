@@ -1,6 +1,7 @@
 <template>
   <div class='hello'>
     <h2>{{ msg }}</h2>
+    <ggmap></ggmap>
   </div>
 </template>
 

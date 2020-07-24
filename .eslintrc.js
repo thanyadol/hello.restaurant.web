@@ -2,6 +2,7 @@
 
 module.exports = {
   root: true,
+  allowEmptyReject: true,
   parserOptions: {
     parser: 'babel-eslint'
   },

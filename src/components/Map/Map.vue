@@ -20,7 +20,7 @@ import Vue from 'vue'
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyB2yuNuTseV6VTo8M2v2yQXBJSPw5Ng-Qs',
+    key: process.env.GOOGLE_MAP_API_KEY,
     v: 'OPTIONAL VERSION NUMBER'
     // libraries: 'places', //// If you need to use place input
   }
@@ -36,6 +36,13 @@ export default {
       ],
       css: 'width: 100%; height: 600px;'
     }
+  },
+  created () {
+    let key = process.env.GOOGLE_MAP_API_KEY
+    console.log(key)
+  },
+  mounted () {
+    console.log('mounted')
   }
 }
 </script>
