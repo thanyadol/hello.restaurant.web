@@ -17,6 +17,7 @@
 /// //////////////////////////////////////
 import * as VueGoogleMaps from 'vue2-google-maps'
 import Vue from 'vue'
+import { mapGetters, mapActions } from 'vuex'
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -29,6 +30,7 @@ Vue.use(VueGoogleMaps, {
 export default {
   data () {
     return {
+      // restaurants: [],
       center: { lat: 10.0, lng: 10.0 },
       markers: [
         { position: { lat: 10.0, lng: 10.0 } }
@@ -37,12 +39,24 @@ export default {
       css: 'width: 100%; height: 600px;'
     }
   },
+  computed: {
+    ...mapGetters({
+      restaurants: 'Restaurant/getRestaurant'
+    })
+  },
+  methods: {
+    ...mapActions({
+      listRestaurant: 'Restaurant/listRestaurant'
+    })
+  },
   created () {
     let key = process.env.GOOGLE_MAP_API_KEY
     console.log(key)
   },
   mounted () {
-    console.log('mounted')
+    // console.log('mounted')
+    let keyword = 'bang sue'
+    console.log(this.listRestaurant(keyword))
   }
 }
 </script>

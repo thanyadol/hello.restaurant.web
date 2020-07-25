@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 
 // import './assets/css/app.scss'
 // import './assets/css/mobile.scss'
@@ -19,6 +20,7 @@ Vue.component('ggmap', Map)
 
 /* eslint-disable no-new */
 new Vue({
+  store,
   el: '#app',
   router,
   components: { App },
