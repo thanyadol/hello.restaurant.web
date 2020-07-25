@@ -5,18 +5,20 @@ import App from './App'
 import router from './router'
 import store from './store'
 
-// import './assets/css/app.scss'
-// import './assets/css/mobile.scss'
-// import './assets/css/default.scss'
-// import './assets/css/alter.scss'
+// style site
+import './assets/css/app.css'
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 // custom component
 import Map from '@/components/Map/Map'
+import dgrid from '@/components/Grid/Grid'
 
 Vue.config.productionTip = false
 
 // register DOM tag
 Vue.component('ggmap', Map)
+Vue.component('dgrid', dgrid)
 
 /* eslint-disable no-new */
 new Vue({

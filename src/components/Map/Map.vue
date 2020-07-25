@@ -1,15 +1,18 @@
 <template>
   <gmap-map
     :center="center"
-    :zoom="7"
+    :zoom="15"
     :style="css">
+    <gmap-info-window :options="infoOptions" :position="infoPosition" :opened="infoOpened" >
+      {{infoContent}}
+    </gmap-info-window>
     <gmap-marker
       :key="index"
       v-for="(m, index) in markers"
       :position="m.position"
       :clickable="true"
-      :draggable="true"
-      @click="center=m.position"></gmap-marker>
+      :draggable="false"
+      @click="onInfoClick(m)"></gmap-marker>
   </gmap-map>
 </template>
 
@@ -30,9 +33,19 @@ Vue.use(VueGoogleMaps, {
 export default {
   data () {
     return {
-      center: { lat: 10.0, lng: 10.0 },
+      center: { lat: 10.3157, lng: 123.8854 },
       markers: [],
-      css: 'width: 100%; height: 600px;'
+      infoPosition: null,
+      infoContent: null,
+      infoOpened: false,
+      infoCurrentKey: null,
+      infoOptions: {
+        pixelOffset: {
+          width: 0,
+          height: -35
+        }
+      },
+      css: 'width: 100%; height: 400px;'
     }
   },
   computed: {
@@ -45,11 +58,29 @@ export default {
       listRestaurant: 'Restaurant/listRestaurant'
     }),
 
-    async onDefaultKeyword () {
+    async onDefaultKeywordChange () {
       let keyword = 'Bang Sue'
       console.log('calling')
+
+      // /ist restaurant from actions
       await this.listRestaurant(keyword)
-      console.log(this.restaurants)
+      this.markers = this.restaurants.map((post) => {
+        return { position: { lat: post.lat, lng: post.lng }, title: post.name, id: post.id }
+      })
+
+      // set new map center
+      this.center = this.markers[0].position
+    },
+
+    onInfoClick: function (marker) {
+      this.infoPosition = marker.position
+      this.infoContent = marker.title
+      if (this.infoCurrentKey === marker.id) {
+        this.infoOpened = !this.infoOpened
+      } else {
+        this.infoOpened = true
+        this.infoCurrentKey = marker.id
+      }
     }
   },
   created () {
@@ -57,7 +88,7 @@ export default {
     console.log(key)
   },
   mounted () {
-    this.onDefaultKeyword()
+    this.onDefaultKeywordChange()
   }
 }
 </script>
