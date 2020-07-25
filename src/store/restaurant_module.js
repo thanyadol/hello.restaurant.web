@@ -16,12 +16,12 @@ const restaurantModule = {
     },
     async listRestaurant ({ commit, state }, keyword) {
       let result = await RestaurantService.listRestaurant(keyword)
-      console.log(result)
-      commit('SET_RESTAURANT', result)
+      // state.restaurants = result.data
+      commit('SET_RESTAURANT', result.data)
     }
   },
   getters: {
-    listRestaurant (state) {
+    getRestaurant (state) {
       return state.restaurants
     }
   }
