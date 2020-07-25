@@ -108,7 +108,7 @@ button.ui.button {
 a.item
 {
     background-color: transparent;
-    padding: 1em;
+    padding: 0.5em 1em;
     background: #e9ecef;
     margin: 1px;
 }

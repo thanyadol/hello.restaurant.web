@@ -12,12 +12,14 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 // custom component
 import Map from '@/components/Map/Map'
+import Keyword from '@/components/Keyword/Keyword'
 import dgrid from '@/components/Grid/Grid'
 
 Vue.config.productionTip = false
 
 // register DOM tag
 Vue.component('ggmap', Map)
+Vue.component('keyword', Keyword)
 Vue.component('dgrid', dgrid)
 
 /* eslint-disable no-new */

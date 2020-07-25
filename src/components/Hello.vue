@@ -2,7 +2,12 @@
 <div>
   <div class='hello container'>
     <h2>{{ msg }}</h2>
-    <div class='row | mt-5'>
+    <div class='row | mt-5 | flex--col'>
+      <div class='col-md-4'>
+        <keyword> </keyword>
+      </div>
+    </div>
+    <div class='row | mt-1'>
       <div class='col-md'>
         <ggmap></ggmap>
       </div>
