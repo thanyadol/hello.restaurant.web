@@ -4,7 +4,7 @@
     <h2>{{ msg }}</h2>
     <div class='row | mt-5 | flex--col'>
       <div class='col-md-4'>
-        <keyword> </keyword>
+        <keyword v-model="keyword"> </keyword>
       </div>
     </div>
     <div class='row | mt-1'>
@@ -24,13 +24,45 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'Hello',
   data () {
     return {
+      keyword: 'Bang Sue',
       msg: 'Hello World with Vue.js 2.5.2 at ' + new Date(),
       footerText: '© 2020 Hello '
     }
+  },
+  watch: {
+    keyword (newVal, oldVal) {
+      // trime and check nuu
+      if (newVal) {
+        if (newVal.trim() !== oldVal.trim()) {
+          this.onKeywordChange(newVal)
+          console.log(newVal)
+        }
+      }
+    }
+  },
+  computed: {
+    ...mapGetters({
+      restaurants: 'Restaurant/getRestaurant'
+    })
+  },
+  methods: {
+    ...mapActions({
+      listRestaurant: 'Restaurant/listRestaurant'
+    }),
+
+    async onKeywordChange (key) {
+      // /ist restaurant from actions
+      await this.listRestaurant(key)
+    }
+  },
+  mounted () {
+    this.onKeywordChange(this.keyword)
   }
 }
 </script>

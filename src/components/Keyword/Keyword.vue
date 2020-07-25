@@ -1,6 +1,6 @@
 <template>
   <div class="form-group">
-    <input type="text" class="form-control" placeholder="Enter keyword">
+    <input v-on:keyup.enter="updateValue($event.target.value)" :value="value" type="text" class="form-control" placeholder="Enter keyword" >
   </div>
 </template>
 
@@ -12,14 +12,19 @@ export default {
     return {
     }
   },
+  props: ['value'],
   computed: {
   },
   methods: {
-  },
-  created () {
+    onKeywordChange: function (value) {
+      console.log(value)
+    },
+    updateValue (value) {
+      this.$emit('input', value)
+    }
   },
   mounted () {
-
+    // console.log(this.value)
   }
 }
 </script>

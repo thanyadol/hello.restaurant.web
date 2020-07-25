@@ -19,8 +19,8 @@
 <script>
 /// //////////////////////////////////////
 import * as VueGoogleMaps from 'vue2-google-maps'
+import { mapGetters } from 'vuex'
 import Vue from 'vue'
-import { mapGetters, mapActions } from 'vuex'
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -54,24 +54,6 @@ export default {
     })
   },
   methods: {
-    ...mapActions({
-      listRestaurant: 'Restaurant/listRestaurant'
-    }),
-
-    async onDefaultKeywordChange () {
-      let keyword = 'Bang Sue'
-      console.log('calling')
-
-      // /ist restaurant from actions
-      await this.listRestaurant(keyword)
-      this.markers = this.restaurants.map((post) => {
-        return { position: { lat: post.lat, lng: post.lng }, title: post.name, id: post.id }
-      })
-
-      // set new map center
-      this.center = this.markers[0].position
-    },
-
     onInfoClick: function (marker) {
       this.infoPosition = marker.position
       this.infoContent = marker.title
@@ -81,14 +63,30 @@ export default {
         this.infoOpened = true
         this.infoCurrentKey = marker.id
       }
+    },
+    mappingMarkerAndCenter: function (restaurants) {
+      this.markers = restaurants.map((post) => {
+        return { position: { lat: post.lat, lng: post.lng }, title: post.name, id: post.id }
+      })
+
+      try {
+        this.center = this.markers[0].position
+      } catch (err) {
+        console.log(err)
+      }
     }
   },
   created () {
-    let key = process.env.GOOGLE_MAP_API_KEY
-    console.log(key)
+    // let key = process.env.GOOGLE_MAP_API_KEY
+    // console.log(key)
+  },
+  watch: {
+    restaurants (newVal, oldVal) {
+      this.mappingMarkerAndCenter(this.restaurants)
+    }
   },
   mounted () {
-    this.onDefaultKeywordChange()
+    this.mappingMarkerAndCenter(this.restaurants)
   }
 }
 </script>

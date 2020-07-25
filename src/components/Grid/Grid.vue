@@ -44,20 +44,19 @@ export default {
   watch: {
     data (newVal, oldVal) {
       this.$refs.vuetable.refresh()
+    },
+    restaurants (newVal, oldVal) {
+      this.data = newVal
     }
   },
   mounted () {
-    this.onDefaultKeywordChange()
+    this.data = this.restaurants
   },
   methods: {
     ...mapActions({
       listRestaurant: 'Restaurant/listRestaurant'
     }),
-    async onDefaultKeywordChange () {
-      let keyword = 'Bang Sue'
-      await this.listRestaurant(keyword)
-      this.data = this.restaurants
-    },
+
     onPaginationData (paginationData) {
       this.$refs.pagination.setPaginationData(paginationData)
     },
@@ -83,7 +82,7 @@ export default {
         local.length,
         this.perPage
       )
-      console.log('pagination:', pagination)
+      // console.log('pagination:', pagination)
       let from = pagination.from - 1
       let to = from + this.perPage
 
@@ -93,7 +92,7 @@ export default {
       }
     },
     onActionClicked (action, data) {
-      console.log('actions click', data.name)
+      console.log('on actions click', data.name)
     }
   }
 }
@@ -117,7 +116,9 @@ a.item:hover, tr:hover
     background: #f3e7ed;
     cursor: pointer;
 }
-
+.vuetable-empty-result {
+    padding-top: 105px !important;
+}
 .page
 {
   padding: 2em;
