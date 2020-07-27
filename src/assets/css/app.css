@@ -1,0 +1,10 @@
+.gm-ui-hover-effect {
+  display: none !important; 
+}
+
+.flex--col
+{
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+}
